@@ -21,5 +21,6 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
           projectId: ${{ secrets.FIREBASE_PROJECT_ID }}
-          # You can optionally add other inputs like 'target', 'channelId', etc.
+          channelId: live  # Add this line to deploy to the live channel
+          # You can optionally keep the 'target' line if needed for specific multi-site configurations
           # target: your-hosting-site-name
