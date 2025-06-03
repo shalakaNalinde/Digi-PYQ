@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Engineering PYQ Repository</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #f5f7fa, #e4ecf2);
+      color: #1e272e;
+      line-height: 1.6;
+      font-size: 16px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      scroll-behavior: smooth;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #283593; /* Dark Indigo */
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 30px;
+      box-shadow: 0 4px 12px rgba(40, 53, 147, 0.4); /* Shadow with navbar color */
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      user-select: none;
+    }
+
+    .nav-links a,
+    .nav-links button {
+      color: #fff;
+      margin-left: 25px;
+      text-decoration: none;
+      background: none;
+      border: none;
+      font-size: 17px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links button:hover {
+      color: #ffd740; /* Amber Accent */
+    }
+
+    /* Main Content Area */
+    .main-content-area {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Center content like container and suggestions */
+    }
+    
+    /* Container for search and papers */
+    .container {
+      width: 100%;
+      max-width: 1000px; /* Max width for content */
+      margin-bottom: 40px; /* Spacing before suggestions */
+    }
+
+    /* Search Bar */
+    .search-bar {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .search-bar input {
+      padding: 12px 20px;
+      width: 65%;
+      max-width: 400px;
+      border-radius: 30px;
+      border: 2px solid #283593; /* Dark Indigo */
+      font-size: 16px;
+      outline-offset: 2px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: inset 0 0 5px rgba(40, 53, 147, 0.2);
+    }
+
+    .search-bar input:focus {
+      border-color: #ffd740; /* Amber Accent */
+      box-shadow: 0 0 10px #ffd740; /* Amber Accent */
+      outline: none;
+    }
+
+    .search-bar button {
+      padding: 12px 24px;
+      border: none;
+      background-color: #ffd740; /* Amber Accent */
+      color: #283593; /* Dark Indigo */
+      font-weight: 700;
+      font-size: 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-left: 15px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 8px rgba(255, 215, 64, 0.4); /* Shadow with accent color */
+    }
+
+    .search-bar button:hover {
+      background-color: #ffca28; /* Darker Amber */
+      box-shadow: 0 6px 12px rgba(255, 202, 40, 0.6);
+    }
+    
+    .container h2 { /* Styling for "Available Question Papers" heading */
+        font-size: 1.8rem;
+        color: #283593;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    /* PYQ Display Styles */
+    .year-block {
+      background-color: #e8f0fe; /* Light Blue */
+      padding: 25px 30px;
+      margin-bottom: 30px;
+      border-left: 10px solid #1e88e5; /* Medium Blue */
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(30, 136, 229, 0.15);
+    }
+    .year-block h3 {
+      font-size: 2rem; /* Slightly reduced */
+      font-weight: 700;
+      color: #0d47a1; /* Darker Blue */
+      margin-bottom: 15px;
+    }
+
+    .branch-block {
+      background-color: #ffffff;
+      margin: 20px 0;
+      padding: 20px 25px;
+      border-radius: 10px;
+      border-left: 6px solid #1565c0; /* Strong Blue */
+      box-shadow: 0 3px 10px rgba(21, 101, 192, 0.1);
+    }
+    .branch-block h4 {
+      font-size: 1.5rem; /* Slightly reduced */
+      font-weight: 600;
+      color: #0d47a1; /* Darker Blue */
+      margin-bottom: 10px;
+    }
+
+    .semester-block {
+      margin-top: 15px;
+      margin-left: 20px; /* Adjusted margin */
+    }
+    .semester-block h5 {
+      font-size: 1.2rem; /* Slightly reduced */
+      font-weight: 500;
+      color: #37474f; /* Dark Grey Blue */
+      margin-bottom: 10px;
+    }
+    
+    .semester-block ul {
+      margin-left: 0; /* Handled by li.paper-link margin/padding if any */
+      margin-top: 10px;
+      padding-left: 0;
+      list-style-type: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px; /* Gap between paper links */
+    }
+
+    .paper-link { /* Applied to LI elements */
+      background-color: #f1f8ff; /* Very Light Blue */
+      color: #1a237e; /* Dark Indigo text */
+      text-decoration: none;
+      padding: 12px 18px; /* Adjusted padding */
+      border-radius: 10px; /* Softer radius */
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 8px rgba(21, 101, 192, 0.1);
+      border: 1px solid #bbdefb; /* Light blue border */
+      min-width: 280px; /* Min width for each paper item */
+      cursor: default; /* Default cursor as it's a container */
+      display: flex; /* Use flex to arrange title and buttons */
+      align-items: center;
+      justify-content: space-between; /* Pushes buttons to the right */
+      gap: 10px; /* Gap between title and button group */
+    }
+
+    .paper-link:hover {
+      background-color: #e3f2fd; /* Slightly darker on hover */
+      border-color: #1e88e5; /* Medium Blue border on hover */
+      box-shadow: 0 5px 15px rgba(30, 136, 229, 0.2);
+    }
+
+    .paper-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #263238; /* Dark Grey */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-grow: 1; /* Allows title to take available space */
+    }
+
+    .paper-actions { /* Container for view/delete buttons */
+        display: flex;
+        gap: 8px;
+    }
+
+    .view-btn,
+    .delete-btn {
+      font-size: 0.9rem;
+      background-color: transparent;
+      border: 1px solid transparent; /* For consistent sizing */
+      color: #283593; /* Dark Indigo */
+      cursor: pointer;
+      transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    .view-btn:hover {
+      color: #43a047; /* Green */
+      background-color: #e8f5e9; /* Light Green background */
+      border-color: #a5d6a7; /* Light Green border */
+    }
+
+    .delete-btn:hover {
+      color: #e53935; /* Red */
+      background-color: #ffebee; /* Light Red background */
+      border-color: #ef9a9a; /* Light Red border */
+    }
+    
+    #pyqContainer p { /* Message for no papers found */
+        text-align: center;
+        font-size: 1.1rem;
+        color: #555;
+        padding: 20px;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.55);
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      backdrop-filter: blur(3px);
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px 35px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 460px; /* Slightly wider modal */
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      position: relative;
+      animation: fadeInScale 0.3s ease forwards;
+    }
+
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 16px;
+      right: 22px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #666;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+    .close-btn:hover { color: #000; }
+
+    .modal-content h2 {
+        font-size: 1.6rem;
+        color: #283593; /* Dark Indigo */
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    /* Form Inputs */
+    label {
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 5px; /* Space between label and input */
+      font-weight: 600;
+      color: #444;
+      user-select: none;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    select,
+    input[type="file"],
+    textarea {
+      width: 100%;
+      padding: 10px 16px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 2px solid #ccc;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      resize: vertical;
+      font-family: inherit;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    select:focus,
+    input[type="file"]:focus,
+    textarea:focus {
+      border-color: #283593; /* Dark Indigo */
+      box-shadow: 0 0 8px rgba(40, 53, 147, 0.5); /* Shadow with navbar color */
+      outline: none;
+    }
+
+    /* Submit button for modals */
+    .modal-content button[type="submit"] {
+      margin-top: 26px;
+      width: 100%;
+      padding: 14px 0;
+      background-color: #283593; /* Dark Indigo */
+      border: none;
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 40px;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 12px rgba(40, 53, 147, 0.6);
+    }
+
+    .modal-content button[type="submit"]:hover {
+      background-color: #3949ab; /* Lighter Indigo */
+      box-shadow: 0 6px 18px rgba(57, 73, 171, 0.8);
+    }
+    
+    /* Suggestion Section */
+    #suggestions-section {
+      width: 100%;
+      max-width: 1000px; /* Consistent with .container */
+      margin-top: 40px; /* Spacing from papers */
+      padding: 25px 30px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.1);
+    }
+
+    #suggestions-section h3 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-weight: 700;
+      color: #283593; /* Dark Indigo */
+      user-select: none;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    #suggestionForm textarea {
+      height: 90px;
+      font-size: 16px;
+      margin-bottom: 15px; /* Space before submit button */
+    }
+    #suggestionForm button[type="submit"] { /* Specific styling for suggestion submit */
+        padding: 12px 25px;
+        background-color: #43a047; /* Green */
+        border-radius: 25px;
+        /* Inherits other button props from modal or define fully */
+    }
+    #suggestionForm button[type="submit"]:hover {
+        background-color: #388e3c; /* Darker Green */
+    }
+
+
+    #suggestionList {
+      margin-top: 22px;
+      max-height: 300px; /* Increased height */
+      overflow-y: auto;
+      border-top: 1px solid #ddd;
+      padding-top: 18px;
+    }
+    #suggestionList p { /* Message for no suggestions */
+        text-align: center;
+        font-size: 1rem;
+        color: #555;
+    }
+
+    .suggestion-item {
+      background: #f9f9f9;
+      border-radius: 10px; /* Softer radius */
+      padding: 14px 20px;
+      margin-bottom: 14px;
+      font-size: 15.5px;
+      color: #222;
+      word-wrap: break-word;
+      position: relative;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05); /* Softer shadow */
+      display: flex; /* For aligning text and delete button */
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .suggestion-item .text-content {
+        flex-grow: 1;
+    }
+    .suggestion-item .text-content p {
+        margin-bottom: 5px;
+        text-align: left; /* Align suggestion text to left */
+    }
+     .suggestion-item .text-content small {
+        font-size: 0.8em;
+        color: #777;
+    }
+
+
+    .suggestion-delete-btn { /* Re-using .delete-btn style with minor adjustments */
+      /* Basic styles inherited or use .delete-btn class */
+      margin-left: 10px; /* Space from suggestion text */
+      padding: 4px 8px;
+      font-size: 0.85rem;
+      align-self: center; /* Vertically center if suggestion text is long */
+    }
+    
+    /* Confirmation Modal Buttons */
+    .confirmation-buttons {
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px; /* Increased gap */
+        margin-top: 20px;
+    }
+    .confirmation-buttons button {
+        padding: 10px 22px; /* Adjusted padding */
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 25px; /* Rounded buttons */
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    #confirmBtn {
+        background-color: #4CAF50; /* Green */
+        color: white;
+        box-shadow: 0 2px 5px rgba(76, 175, 80, 0.4);
+    }
+    #confirmBtn:hover {
+        background-color: #45a049; /* Darker Green */
+        box-shadow: 0 4px 10px rgba(76, 175, 80, 0.6);
+    }
+    #cancelBtn {
+        background-color: #757575; /* Grey */
+        color: white;
+        box-shadow: 0 2px 5px rgba(117, 117, 117, 0.3);
+    }
+    #cancelBtn:hover {
+        background-color: #616161; /* Darker Grey */
+        box-shadow: 0 4px 10px rgba(117, 117, 117, 0.5);
+    }
+
+
+    /* Home Button (if needed, currently part of nav) */
+    .home-button-header { /* Style for home button if it's in a separate header */
+      padding: 10px 20px;
+      margin: 14px; /* Adjust as needed */
+      font-size: 18px;
+      cursor: pointer;
+      background-color: #43a047; /* Green */
+      color: white;
+      border: none;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(67, 160, 71, 0.6);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    .home-button-header:hover {
+      background-color: #388e3c; /* Darker Green */
+      box-shadow: 0 6px 16px rgba(56, 142, 60, 0.8);
+    }
+    
+    /* Utility for error messages */
+    .error-message {
+        color: #e53935; /* Red */
+        margin-top: 12px;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .navbar { padding: 12px 15px; }
+        .navbar h1 { font-size: 22px; }
+        .nav-links a, .nav-links button { font-size: 15px; margin-left: 15px; }
+        
+        .search-bar input { width: 100%; margin-bottom: 10px; }
+        .search-bar button { width: auto; margin-left: 0; padding: 12px 18px; } /* Allow button to size to content */
+        .search-bar { display: flex; flex-direction: column; gap: 10px; align-items: center;}
+
+
+        .year-block, .branch-block { padding: 15px 20px; }
+        .year-block h3 { font-size: 1.6rem; }
+        .branch-block h4 { font-size: 1.3rem; }
+        .semester-block h5 { font-size: 1.1rem; }
+        .paper-link { min-width: 100%; /* Full width on small screens */ }
+    }
+
+    @media (max-width: 480px) {
+        body { font-size: 15px; }
+        .main-content-area { padding: 10px; }
+        .modal-content { padding: 20px 25px; }
+        .modal-content h2 { font-size: 1.4rem; }
+        label { font-size: 0.95rem;}
+        input[type="text"], input[type="password"], select, input[type="file"], textarea { padding: 8px 12px; font-size: 15px;}
+        .modal-content button[type="submit"] { font-size: 16px; padding: 12px 0;}
+        #suggestions-section { padding: 20px; }
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <h1>Engineering PYQ Repository</h1>
+    <div class="nav-links">
+      <a href="#" id="homeBtn"><i class="fa-solid fa-home"></i> Home</a>
+      <a href="#" id="adminLoginBtn"><i class="fa-solid fa-user-shield"></i> Admin Login</a>
+      <a href="#" id="adminLogoutBtn" style="display:none;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+      <a href="#" id="uploadBtn" style="display:none;"><i class="fa-solid fa-upload"></i> Upload</a>
+    </div>
+  </nav>
+
+<div class="main-content-area">
+  <div class="container">
+    <div class="search-bar">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search by Year, Branch, Semester, Title..."
+        aria-label="Search Question Papers"
+      />
+      <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+      <button id="clearSearchBtn" style="display:none;">Clear</button>
+    </div>
+
+    <h2>Available Question Papers</h2>
+    <div id="pyqContainer">
+      <p>Loading papers...</p>
+    </div>
+  </div>
+
+  <section id="suggestions-section">
+    <h3>Have Suggestions? We're Listening!</h3>
+    <form id="suggestionForm">
+      <textarea
+        id="suggestionInput"
+        placeholder="Write your suggestion here..."
+        aria-label="Suggestion input"
+        required
+      ></textarea>
+      <button type="submit">Submit Suggestion</button>
+    </form>
+
+    <div id="suggestionList" aria-live="polite" aria-relevant="additions">
+      <p>Loading suggestions...</p>
+    </div>
+  </section>
+</div>
+
+  <div class="modal" id="adminLoginModal" role="dialog" aria-modal="true" aria-labelledby="adminLoginTitle">
+    <div class="modal-content">
+      <span class="close-btn" id="adminModalCloseBtn" title="Close">&times;</span>
+      <h2 id="adminLoginTitle">Admin Login</h2>
+      <form id="adminLoginForm">
+        <label for="adminPassword">Enter Admin Password:</label>
+        <input type="password" id="adminPassword" required autocomplete="current-password" />
+        <button type="submit">Login</button>
+      </form>
+      <p id="loginError" class="error-message" style="display:none;"></p>
+    </div>
+  </div>
+
+  <div class="modal" id="uploadModal" role="dialog" aria-modal="true" aria-labelledby="uploadTitle">
+    <div class="modal-content">
+      <span class="close-btn" id="uploadModalCloseBtn" title="Close">&times;</span>
+      <h2 id="uploadTitle">Upload New Question Paper</h2>
+      <form id="uploadForm">
+        <label for="paperTitle">Paper Title:</label>
+        <input type="text" id="paperTitle" required placeholder="Example: Data Structures Midterm" />
+
+        <label for="paperYear">Year:</label>
+        <select id="paperYear" required>
+          <option value="" disabled selected>Select Year</option>
+          <option value="2019">2019</option>
+          <option value="2020">2020</option>
+          <option value="2021">2021</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+        </select>
+
+        <label for="paperBranch">Branch:</label>
+        <select id="paperBranch" required>
+          <option value="" disabled selected>Select Branch</option>
+          <option value="Computer Science">Computer Science</option>
+          <option value="Mechanical">Mechanical</option>
+          <option value="Electrical">Electrical</option>
+          <option value="Civil">Civil</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Information Technology">Information Technology</option>
+          <option value="Chemical">Chemical</option>
+          <option value="Biotechnology">Biotechnology</option>
+          </select>
+
+        <label for="paperSemester">Semester:</label>
+        <select id="paperSemester" required>
+          <option value="" disabled selected>Select Semester</option>
+          <option value="1">1</option> <option value="2">2</option>
+          <option value="3">3</option> <option value="4">4</option>
+          <option value="5">5</option> <option value="6">6</option>
+          <option value="7">7</option> <option value="8">8</option>
+        </select>
+
+        <label for="paperFile">Select PDF File:</label>
+        <input type="file" id="paperFile" accept="application/pdf" required />
+        <p id="uploadError" class="error-message" style="display:none;"></p>
+        <button type="submit" id="uploadSubmitBtn">Upload Paper</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="confirmationModal" role="dialog" aria-modal="true" aria-labelledby="confirmationTitle">
+    <div class="modal-content">
+      <span class="close-btn" id="confirmationModalCloseBtn" title="Close">&times;</span>
+      <h2 id="confirmationTitle">Confirm Action</h2>
+      <p id="confirmationMessage" style="margin: 20px 0; font-size: 1.1rem; text-align:center;"></p>
+      <div class="confirmation-buttons">
+          <button id="cancelBtn">Cancel</button>
+          <button id="confirmBtn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="messageModal" role="dialog" aria-modal="true" aria-labelledby="messageTitle">
+        <div class="modal-content">
+            <span class="close-btn" id="messageModalCloseBtn" title="Close">&times;</span>
+            <h2 id="messageTitle">Notification</h2>
+            <p id="messageText" style="margin: 20px 0; font-size: 1.1rem; text-align:center;"></p>
+            <div style="display: flex; justify-content: flex-end;">
+                 <button id="messageOkBtn" class="confirmation-buttons" style="background-color: #283593; color:white; min-width: 80px;">OK</button>
+            </div>
+        </div>
+    </div>
+
+
+<script type="module">
+  // Firebase SDK imports
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { 
+      getAuth, 
+      signInAnonymously, 
+      signInWithCustomToken, 
+      onAuthStateChanged 
+  } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+  import { 
+      getFirestore, 
+      collection, 
+      addDoc, 
+      getDocs, 
+      doc, 
+      deleteDoc, 
+      query, 
+      orderBy, 
+      onSnapshot,
+      serverTimestamp,
+      setLogLevel
+  } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    deleteObject,
+    uploadBytesResumable
+  } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+
+  // --- Firebase Configuration ---
+  // Replace with your Firebase config object
+  const firebaseConfig = {
+      apiKey: "AIzaSyBGiUetWm-qTQYHQu9QGBNyYUmuuA9Mw0A", // <- Use your actual config here
+      authDomain: "digi-pyq.firebaseapp.com", // <- Use your actual config here
+      projectId: "digi-pyq", // <- Use your actual config here
+      storageBucket: "digi-pyq.firebasestorage.app", // <- Use your actual config here
+      messagingSenderId: "381560005110", // <- Use your actual config here
+      appId: "1:381560005110:web:d01703d08404ec4368e7d7" // <- Use your actual config here
+  };
+
+
+  let db, auth, storage;
+  let currentUserId = null;
+  let papersUnsubscribe = null;
+  let suggestionsUnsubscribe = null;
+  const appId = firebaseConfig.appId; // Use the appId from your config
+
+
+  if (!firebaseConfig || !firebaseConfig.projectId) {
+      console.error("Firebase configuration is missing or incomplete. App will not connect to Firebase.");
+      document.getElementById('pyqContainer').innerHTML = '<p>Error: Firebase configuration is missing. Cannot load data.</p>';
+      document.getElementById('suggestionList').innerHTML = '<p>Error: Firebase configuration is missing. Cannot load data.</p>';
+  } else {
+      try {
+          const firebaseApp = initializeApp(firebaseConfig);
+          auth = getAuth(firebaseApp);
+          db = getFirestore(firebaseApp);
+          storage = getStorage(firebaseApp); // Initialize Firebase Storage
+          setLogLevel('debug'); // Optional: for Firebase JS SDK verbose logging
+          console.log("Firebase Initialized. App ID:", appId);
+          initializeAuth();
+      } catch (error) {
+          console.error("Error initializing Firebase:", error);
+          document.getElementById('pyqContainer').innerHTML = `<p>Error initializing Firebase: ${error.message}. Cannot load data.</p>`;
+          document.getElementById('suggestionList').innerHTML = `<p>Error initializing Firebase: ${error.message}. Cannot load data.</p>`;
+      }
+  }
+
+  // --- Admin Password (INSECURE - For Demo Only) ---
+  // WARNING: Storing passwords client-side is highly insecure.
+  // For a real application, use Firebase Authentication with custom claims for admin roles.
+  const ADMIN_PASSWORD = 'admin@123';
+
+  // --- DOM Elements ---
+  const adminLoginBtn = document.getElementById('adminLoginBtn');
+  const adminLogoutBtn = document.getElementById('adminLogoutBtn');
+  const uploadBtn = document.getElementById('uploadBtn');
+  const homeBtn = document.getElementById('homeBtn');
+
+  const adminLoginModal = document.getElementById('adminLoginModal');
+  const adminModalCloseBtn = document.getElementById('adminModalCloseBtn');
+  const adminLoginForm = document.getElementById('adminLoginForm');
+  const loginError = document.getElementById('loginError');
+
+  const uploadModal = document.getElementById('uploadModal');
+  const uploadModalCloseBtn = document.getElementById('uploadModalCloseBtn');
+  const uploadForm = document.getElementById('uploadForm');
+  const uploadError = document.getElementById('uploadError');
+  const uploadSubmitBtn = document.getElementById('uploadSubmitBtn');
+
+  const pyqContainer = document.getElementById('pyqContainer');
+  const searchInput = document.getElementById('searchInput');
+  const searchBtn = document.getElementById('searchBtn');
+  const clearSearchBtn = document.getElementById('clearSearchBtn');
+
+  const suggestionForm = document.getElementById('suggestionForm');
+  const suggestionInput = document.getElementById('suggestionInput');
+  const suggestionList = document.getElementById('suggestionList');
+
+  const confirmationModal = document.getElementById('confirmationModal');
+  const confirmationModalCloseBtn = document.getElementById('confirmationModalCloseBtn');
+  const confirmationMessage = document.getElementById('confirmationMessage');
+  const confirmBtn = document.getElementById('confirmBtn');
+  const cancelBtn = document.getElementById('cancelBtn');
+  let confirmCallback = null;
+
+  const messageModal = document.getElementById('messageModal');
+  const messageModalCloseBtn = document.getElementById('messageModalCloseBtn');
+  const messageText = document.getElementById('messageText');
+  const messageOkBtn = document.getElementById('messageOkBtn');
+
+
+  // --- Application State ---
+  let isAdmin = false;
+  let allPapers = []; // Local cache of papers for searching
+
+  // --- Firebase Path Builders ---
+  const papersCollectionPath = () => `artifacts/${appId}/public/data/papers`;
+  const suggestionsCollectionPath = () => `artifacts/${appId}/public/data/suggestions`;
+  const paperStoragePath = (year, branch, semester, fileName) => `artifacts/${appId}/papers/${year}/${branch}/${semester}/${fileName}`;
+
+
+  // --- Authentication ---
+  function initializeAuth() {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        currentUserId = user.uid;
+        console.log("User is signed in:", currentUserId);
+        // User is signed in. Now fetch data.
+        loadAndDisplayPapers();
+        loadAndDisplaySuggestions();
+      } else {
+        currentUserId = null;
+        console.log("User is signed out. Attempting anonymous sign-in.");
+        signInAnonymously(auth).catch(error => {
+          console.error("Error signing in anonymously:", error);
+           document.getElementById('pyqContainer').innerHTML = `<p>Error during authentication: ${error.message}. Cannot load data.</p>`;
+           document.getElementById('suggestionList').innerHTML = `<p>Error during authentication: ${error.message}. Cannot load data.</p>`;
+        });
+      }
+      updateUIForAdmin(); // Update UI based on isAdmin (controlled by password here)
+    });
+  }
+
+  // --- UI Helper Functions ---
+  function showModal(modalElement) {
+    modalElement.style.display = 'flex';
+  }
+  function closeModal(modalElement) {
+    modalElement.style.display = 'none';
+  }
+
+  function showMessage(title, text) {
+    document.getElementById('messageTitle').textContent = title;
+    messageText.textContent = text;
+    showModal(messageModal);
+  }
+  messageOkBtn.addEventListener('click', () => closeModal(messageModal));
+  messageModalCloseBtn.addEventListener('click', () => closeModal(messageModal));
+
+
+  function showConfirmation(message, callback) {
+    confirmationMessage.textContent = message;
+    confirmCallback = callback;
+    showModal(confirmationModal);
+  }
+  confirmBtn.addEventListener('click', () => {
+    if (confirmCallback) confirmCallback();
+    closeModal(confirmationModal);
+  });
+  cancelBtn.addEventListener('click', () => closeModal(confirmationModal));
+  confirmationModalCloseBtn.addEventListener('click', () => closeModal(confirmationModal));
+
+
+  // --- Admin Functionality ---
+  adminLoginBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    loginError.style.display = 'none';
+    adminLoginForm.reset();
+    showModal(adminLoginModal);
+    document.getElementById('adminPassword').focus();
+  });
+  adminModalCloseBtn.addEventListener('click', () => closeModal(adminLoginModal));
+
+  adminLoginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const pwd = document.getElementById('adminPassword').value.trim();
+    if (pwd === ADMIN_PASSWORD) {
+      isAdmin = true;
+      closeModal(adminLoginModal);
+      updateUIForAdmin();
+      // Re-render papers and suggestions to show/hide admin controls
+      displayPYQ(searchInput.value.trim().toLowerCase());
+      displaySuggestions();
+    } else {
+      loginError.textContent = 'Incorrect password. Try again.';
+      loginError.style.display = 'block';
+    }
+  });
+
+  adminLogoutBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    isAdmin = false;
+    updateUIForAdmin();
+    displayPYQ(searchInput.value.trim().toLowerCase());
+    displaySuggestions();
+  });
+
+  function updateUIForAdmin() {
+    adminLoginBtn.style.display = isAdmin ? 'none' : 'inline-block';
+    adminLogoutBtn.style.display = isAdmin ? 'inline-block' : 'none';
+    uploadBtn.style.display = isAdmin ? 'inline-block' : 'none';
+    // Add/remove 'admin' class to suggestion items for CSS targeting of delete buttons
+    document.querySelectorAll('.suggestion-item').forEach(item => {
+        if (isAdmin) item.classList.add('admin');
+        else item.classList.remove('admin');
+    });
+     // Add/remove 'admin' class to paper links for CSS targeting of delete buttons
+    document.querySelectorAll('.paper-link').forEach(item => {
+        if (isAdmin) item.classList.add('admin');
+        else item.classList.remove('admin');
+    });
+  }
+
+  // --- Paper Upload Functionality ---
+  uploadBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    uploadForm.reset();
+    uploadError.style.display = 'none';
+    showModal(uploadModal);
+    uploadForm.paperTitle.focus();
+  });
+  uploadModalCloseBtn.addEventListener('click', () => closeModal(uploadModal));
+
+  uploadForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!db || !storage) {
+        showMessage("Error", "Firebase services not initialized. Cannot upload paper.");
+        return;
+    }
+
+    const title = uploadForm.paperTitle.value.trim();
+    const year = uploadForm.paperYear.value;
+    const branch = uploadForm.paperBranch.value;
+    const semester = uploadForm.paperSemester.value;
+    const file = uploadForm.paperFile.files[0];
+
+    if (!file || file.type !== 'application/pdf') {
+      uploadError.textContent = 'Please select a valid PDF file.';
+      uploadError.style.display = 'block';
+      return;
+    }
+
+    uploadError.style.display = 'none';
+    uploadSubmitBtn.disabled = true;
+    uploadSubmitBtn.textContent = 'Uploading...';
+
+    try {
+      // Upload file to Firebase Storage
+      const storageRef = ref(storage, paperStoragePath(year, branch, semester, file.name));
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on('state_changed',
+        (snapshot) => {
+          // Observe state change events such as progress, pause, and resume
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          uploadSubmitBtn.textContent = `Uploading (${Math.round(progress)}%)...`;
+        },
+        (error) => {
+          // Handle unsuccessful uploads
+          console.error("Error uploading file to Storage:", error);
+          showMessage("Upload Error", `Failed to upload file: ${error.message}`);
+          uploadSubmitBtn.disabled = false;
+          uploadSubmitBtn.textContent = 'Upload Paper';
+        },
+        async () => {
+          // Handle successful uploads on complete
+          try {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+            // Add paper details to Firestore
+            await addDoc(collection(db, papersCollectionPath()), {
+              title,
+              year,
+              branch,
+              semester,
+              paper_link: downloadURL, // Store the download URL
+              fileName: file.name, // Store file name for potential deletion later
+              createdAt: serverTimestamp()
+            });
+
+            closeModal(uploadModal);
+            showMessage("Success", "Paper uploaded successfully!");
+            uploadForm.reset();
+            uploadSubmitBtn.disabled = false;
+            uploadSubmitBtn.textContent = 'Upload Paper';
+            // displayPYQ() will be updated by onSnapshot
+          } catch (error) {
+            console.error("Error adding paper details to Firestore: ", error);
+            showMessage("Upload Error", `Failed to save paper details: ${error.message}`);
+            uploadSubmitBtn.disabled = false;
+            uploadSubmitBtn.textContent = 'Upload Paper';
+          }
+        }
+      );
+
+    } catch (error) {
+      console.error("Error initiating upload:", error);
+      showMessage("Upload Error", `Failed to initiate upload: ${error.message}`);
+      uploadSubmitBtn.disabled = false;
+      uploadSubmitBtn.textContent = 'Upload Paper';
+    }
+  });
+
+
+  // --- Paper Display and Deletion ---
+  function loadAndDisplayPapers() {
+    if (!db) return;
+    const papersRef = collection(db, papersCollectionPath());
+
+    if (papersUnsubscribe) papersUnsubscribe(); // Unsubscribe from previous listener
+
+    papersUnsubscribe = onSnapshot(papersRef, (querySnapshot) => {
+      allPapers = [];
+      querySnapshot.forEach((doc) => {
+        allPapers.push({ id: doc.id, ...doc.data() });
+      });
+      // Sort papers: Year (desc), Branch (asc), Semester (asc), Title (asc)
+      allPapers.sort((a, b) => {
+          if (a.year !== b.year) return b.year.localeCompare(a.year); // Desc year
+          if (a.branch !== b.branch) return a.branch.localeCompare(b.branch);
+          if (a.semester !== b.semester) return a.semester.localeCompare(b.semester);
+          return a.title.localeCompare(b.title);
+      });
+      displayPYQ(searchInput.value.trim().toLowerCase());
+    }, (error) => {
+      console.error("Error fetching papers: ", error);
+      pyqContainer.innerHTML = `<p>Error loading papers: ${error.message}. Please try again later.</p>`;
+    });
+  }
+
+  function displayPYQ(searchText = "") {
+    pyqContainer.innerHTML = '';
+    let filteredPapers = allPapers;
+
+    if (searchText) {
+      filteredPapers = allPapers.filter(paper =>
+        paper.year.toLowerCase().includes(searchText) ||
+        paper.branch.toLowerCase().includes(searchText) ||
+        paper.semester.toLowerCase().includes(searchText) ||
+        paper.title.toLowerCase().includes(searchText)
+      );
+    }
+
+    if (filteredPapers.length === 0) {
+      pyqContainer.innerHTML = searchText ? '<p>No question papers found for your search.</p>' : '<p>No question papers available yet.</p>';
+      return;
+    }
+
+    // Group papers by year, then branch, then semester
+    const groupedByYear = filteredPapers.reduce((acc, paper) => {
+      acc[paper.year] = acc[paper.year] || {};
+      acc[paper.year][paper.branch] = acc[paper.year][paper.branch] || {};
+      acc[paper.year][paper.branch][paper.semester] = acc[paper.year][paper.branch][paper.semester] || [];
+      acc[paper.year][paper.branch][paper.semester].push(paper);
+      return acc;
+    }, {});
+
+    // Iterate over sorted years (descending)
+    Object.keys(groupedByYear).sort((a,b) => b.localeCompare(a)).forEach(year => {
+      const yearBlock = document.createElement('div');
+      yearBlock.className = 'year-block';
+      yearBlock.innerHTML = `<h3>Year: ${year}</h3>`;
+
+      // Iterate over sorted branches (ascending)
+      Object.keys(groupedByYear[year]).sort().forEach(branch => {
+        const branchBlock = document.createElement('div');
+        branchBlock.className = 'branch-block';
+        branchBlock.innerHTML = `<h4>Branch: ${branch}</h4>`;
+
+        // Iterate over sorted semesters (ascending)
+        Object.keys(groupedByYear[year][branch]).sort((a,b) => a.localeCompare(b)).forEach(semester => {
+          const semesterBlock = document.createElement('div');
+          semesterBlock.className = 'semester-block';
+          semesterBlock.innerHTML = `<h5>Semester: ${semester}</h5>`;
+          const ul = document.createElement('ul');
+
+          groupedByYear[year][branch][semester].forEach(paper => {
+            const li = document.createElement('li');
+            li.className = 'paper-link'; // Add paper-link class
+             if (isAdmin) li.classList.add('admin'); // Add admin class if needed
+
+            const titleSpan = document.createElement('span');
+            titleSpan.textContent = paper.title;
+            titleSpan.className = 'paper-title';
+            li.appendChild(titleSpan);
+
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'paper-actions';
+
+            const viewBtn = document.createElement('a'); // Use 'a' for link
+            viewBtn.innerHTML = '<i class="fa-solid fa-eye"></i> View';
+            viewBtn.className = 'view-btn';
+            viewBtn.href = paper.paper_link; // Set the download URL
+            viewBtn.target = "_blank"; // Open in new tab
+            actionsDiv.appendChild(viewBtn);
+
+            if (isAdmin) {
+              const delBtn = document.createElement('button');
+              delBtn.innerHTML = '<i class="fa-solid fa-trash-alt"></i> Delete';
+              delBtn.className = 'delete-btn';
+              delBtn.title = "Delete paper";
+              delBtn.onclick = () => {
+                showConfirmation(`Are you sure you want to delete "${paper.title}"?`, async () => {
+                  if (!db || !storage) { showMessage("Error", "Firebase services not initialized."); return; }
+                  try {
+                    // Delete from Firestore
+                    await deleteDoc(doc(db, papersCollectionPath(), paper.id));
+                    // Delete from Storage
+                    if (paper.fileName) {
+                         const fileRef = ref(storage, paperStoragePath(paper.year, paper.branch, paper.semester, paper.fileName));
+                         await deleteObject(fileRef).catch((error) => {
+                              // Handle errors, but don't block Firestore deletion
+                              console.warn("Error deleting file from Storage:", error);
+                         });
+                    }
+                    showMessage("Success", `"${paper.title}" deleted successfully.`);
+                    // Display will update via onSnapshot
+                  } catch (error) {
+                    console.error("Error deleting paper: ", error);
+                    showMessage("Error", `Failed to delete paper: ${error.message}`);
+                  }
+                });
+              };
+              actionsDiv.appendChild(delBtn);
+            }
+            li.appendChild(actionsDiv);
+            ul.appendChild(li);
+          });
+          semesterBlock.appendChild(ul);
+          branchBlock.appendChild(semesterBlock);
+        });
+        yearBlock.appendChild(branchBlock);
+      });
+      pyqContainer.appendChild(yearBlock);
+    });
+  }
+
+  // --- Search Functionality ---
+  searchBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const searchText = searchInput.value.trim().toLowerCase();
+    displayPYQ(searchText);
+    clearSearchBtn.style.display = searchText ? 'inline-block' : 'none';
+  });
+
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        searchBtn.click();
+    }
+  });
+
+  clearSearchBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    searchInput.value = '';
+    clearSearchBtn.style.display = 'none';
+    displayPYQ(); // Display all papers
+  });
+
+  // --- Suggestion Functionality ---
+  suggestionForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!db) { showMessage("Error", "Database not initialized. Cannot submit suggestion."); return; }
+
+    const suggestionText = suggestionInput.value.trim();
+    if (suggestionText === '') return;
+
+    try {
+      await addDoc(collection(db, suggestionsCollectionPath()), {
+        text: suggestionText,
+        timestamp: serverTimestamp(),
+        userId: currentUserId || "anonymous" // Store user ID if available
+      });
+      suggestionInput.value = '';
+      // Display updates via onSnapshot
+    } catch (error) {
+      console.error("Error adding suggestion: ", error);
+      showMessage("Error", `Failed to submit suggestion: ${error.message}`);
+    }
+  });
+
+  function loadAndDisplaySuggestions() {
+    if (!db) return;
+    const suggestionsRef = collection(db, suggestionsCollectionPath());
+    const q = query(suggestionsRef, orderBy("timestamp", "desc"));
+
+    if (suggestionsUnsubscribe) suggestionsUnsubscribe(); // Unsubscribe from previous listener
+
+    suggestionsUnsubscribe = onSnapshot(q, (querySnapshot) => {
+      const suggestions = [];
+      querySnapshot.forEach((doc) => {
+        suggestions.push({ id: doc.id, ...doc.data() });
+      });
+      displaySuggestions(suggestions);
+      updateUIForAdmin(); // Ensure admin class is applied if admin is logged in
+    }, (error) => {
+      console.error("Error fetching suggestions: ", error);
+      suggestionList.innerHTML = `<p>Error loading suggestions: ${error.message}.</p>`;
+    });
+  }
+
+  function displaySuggestions(suggestions = null) { // Accepts suggestions array
+    // If suggestions not passed, it means it's called by admin login/logout,
+    // and onSnapshot will eventually call it with data.
+    // For now, if called without data, just show loading or current state.
+    if (suggestions === null) {
+        // This case might occur if called directly without new data.
+        // The onSnapshot handler is the primary way suggestions are displayed.
+        // If suggestionList is empty, show 'loading', else keep current.
+        if (!suggestionList.hasChildNodes() || suggestionList.firstElementChild?.textContent.includes("Loading")) {
+             suggestionList.innerHTML = '<p>Loading suggestions...</p>';
+        }
+        return;
+    }
+
+    suggestionList.innerHTML = '';
+    if (suggestions.length === 0) {
+      suggestionList.innerHTML = '<p>No suggestions yet. Be the first!</p>';
+      return;
+    }
+
+    suggestions.forEach(sugg => {
+      const div = document.createElement('div');
+      div.className = 'suggestion-item';
+      if (isAdmin) div.classList.add('admin'); // For CSS to show delete button
+
+      const textContentDiv = document.createElement('div');
+      textContentDiv.className = 'text-content';
+
+      const p = document.createElement('p');
+      p.textContent = sugg.text;
+      textContentDiv.appendChild(p);
+
+      if (sugg.timestamp) {
+        const small = document.createElement('small');
+        small.textContent = `Submitted: ${new Date(sugg.timestamp.toDate()).toLocaleString()}`;
+        textContentDiv.appendChild(small);
+      }
+      div.appendChild(textContentDiv);
+
+      if (isAdmin) {
+        const delBtn = document.createElement('button');
+        delBtn.innerHTML = '<i class="fa-solid fa-trash-alt"></i>';
+        delBtn.className = 'delete-btn suggestion-delete-btn'; // Use existing delete-btn style
+        delBtn.title = "Delete suggestion";
+        delBtn.onclick = () => {
+          showConfirmation(`Are you sure you want to delete this suggestion?`, async () => {
+            if (!db) { showMessage("Error", "Database not initialized."); return; }
+            try {
+              await deleteDoc(doc(db, suggestionsCollectionPath(), sugg.id));
+              showMessage("Success", "Suggestion deleted.");
+              // Display updates via onSnapshot
+            } catch (error) {
+              console.error("Error deleting suggestion: ", error);
+              showMessage("Error", `Failed to delete suggestion: ${error.message}`);
+            }
+          });
+        };
+        div.appendChild(delBtn);
+      }
+      suggestionList.appendChild(div);
+    });
+  }
+
+  // --- Home Button ---
+  homeBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    searchInput.value = '';
+    clearSearchBtn.style.display = 'none';
+    displayPYQ(); // Display all papers
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // --- Initial Load ---
+  // Authentication handles initial data load via onAuthStateChanged
+  // If Firebase isn't configured, messages are already shown.
+
+  // --- Firestore Security Rules (Example - Deploy these in Firebase Console) ---
+  /*
+  rules_version = '2';
+  service cloud.firestore {
+    match /databases/{database}/documents {
+      // Papers: Public read, authenticated (admin via client logic) write
+      match /artifacts/{appId}/public/data/papers/{paperId} {
+        allow read: if true;
+        allow write: if request.auth != null; // Further restrict with admin check if using proper auth roles
+      }
+      // Suggestions: Public read, authenticated create, authenticated (admin via client logic) delete
+      match /artifacts/{appId}/public/data/suggestions/{suggestionId} {
+        allow read: if true;
+        allow create: if request.auth != null;
+        allow delete: if request.auth != null; // Further restrict with admin check
+      }
+    }
+  }
+  */
+   // Storage Rules Example:
+  /*
+  rules_version = '2';
+  service firebase.storage {
+    match /b/{bucket}/o {
+      match /artifacts/{appId}/papers/{year}/{branch}/{semester}/{fileName} {
+        allow read: if true; // Public read access to uploaded papers
+        allow write: if request.auth != null; // Authenticated users can upload (further restrict for admin)
+      }
+    }
+  }
+  */
+  // For the current insecure admin password setup, the rules above are basic.
+  // True admin roles would involve checking custom claims: request.auth.token.admin == true
+
+</script>
+</body>
+</html>
